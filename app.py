@@ -16,8 +16,13 @@ def app():
 
     st.write("Probability of a prize win after \(n\) times.")
 
-    p = st.number_input("Enter the probability of winning per try (as a percentage)", 
-                    min_value=0.0, max_value=100.0, value=1.2, step=0.000001) / 100    
+    p_input = st.text_input("Enter the probability of winning per try (as a percentage)", value="1.2")
+    try:
+        p = float(p_input) / 100
+    except ValueError:
+        st.error("Please enter a valid probability value.")
+        return
+
     max_tries = st.slider("Select the maximum number of tries", 1, 1000, 200)
     pity_count = st.number_input("Enter pity count (leave 0 for no pity)", min_value=0, max_value=max_tries, value=0, format="%d")
 

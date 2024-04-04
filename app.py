@@ -66,15 +66,19 @@ def app():
 
     with tab2:
         num_prizes = st.number_input("Enter the number of different prizes", min_value=1, max_value=100, value=2, format="%d")
-        default_probs = [1.2, 2] 
+        default_probs = [1.2, 2]  # Default probabilities
         prize_probs = []
+
         for i in range(num_prizes):
-            prob = st.text_input(f"Enter the probability of winning prize {i+1} (as a percentage)", value=default_probs[i], key=f"prob_{i}")
+            default_value = str(default_probs[i]) if i < len(default_probs) else "0"
+            prob_input = st.text_input(f"Enter the probability of winning prize {i+1} (as a percentage)", value=default_value, key=f"prob_{i}")
             try:
-                prize_probs.append(float(prob) / 100)
+                prob = float(prob_input)
+                prize_probs.append(prob / 100)
             except ValueError:
                 st.error(f"Please enter a valid probability value for prize {i+1}.")
                 return
+
 
         if st.button("Run Monte Carlo Simulation"):
             start_time = time.time()

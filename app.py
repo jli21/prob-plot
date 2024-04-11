@@ -91,5 +91,14 @@ def app():
             fig.update_layout(title='Distribution of Tries to Win All Prizes', xaxis_title='Number of Tries', yaxis_title='Count', hovermode='closest')
             st.plotly_chart(fig, use_container_width=True)
 
+            tries_sorted = np.sort(tries_distribution)
+            cdf = np.arange(1, len(tries_sorted)+1) / len(tries_sorted)
+
+            fig_cdf = go.Figure(data=go.Scatter(x=tries_sorted, y=cdf, mode='lines', name='CDF', line=dict(color='red')))
+            fig_cdf.update_layout(title='Cumulative Distribution Function (CDF) of Tries to Win All Prizes', xaxis_title='Number of Tries', yaxis_title='CDF', hovermode='closest')
+
+            st.plotly_chart(fig_cdf, use_container_width=True)
+
+
 if __name__ == "__main__":
     app()
